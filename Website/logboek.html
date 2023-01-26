@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GIP</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://bootswatch.com/5/united/bootstrap.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid"> 
+      <a class="navbar-brand" href="index.html">GIP Milan</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Taal</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="index.html">Nederlands</a>
+              <a class="dropdown-item" href="indexfr.html">Frans</a>
+              <a class="dropdown-item" href="indexen.html">Engels</a>
+            </div>
+          </li>
+          <li class="nav-item">         
+              <a class="nav-link" href="mij.html">Over Mij</a>
+              <div class="streep"></div>
+          </li>
+          <li class="nav-item">
+           
+              <a class="nav-link" href="logboek.html">Logboek</a>
+              <div class="streep"></div>
+          </li>
+          <li class="nav-item">
+           
+              <a class="nav-link" href="storie.html">User Stories</a>
+              <div class="streep"></div>
+          </li>
+          <li class="nav-item">
+            
+              <a class="nav-link" href="lexicon.html">Lexicon</a>
+              <div class="streep"></div>
+          </li>
+          <li class="nav-item">
+           
+              <a class="nav-link" href="planning.html">Planning</a>
+              <div class="streep"></div>
+          </li>
+          <li class="nav-item">
+           
+              <a class="nav-link" href="stage.html">Stage</a>
+              <div class="streep"></div>
+          </li>
+          <li class="nav-item">
+            
+              <a class="nav-link" href="sorter.html">M&M Sorter</a>
+              <div class="streep"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="section6">
+    <center>
+      <div class="header">
+        <br>
+        <h1>Logboek</h1>
+      </div>
+    </center>
+  
+    <div class="container mt-3">
+    <table class="table table-info text-white">
+      <thead>
+        <th>id</th>
+        <th>datum</th>
+        <th>beschrijving</th>
+        <th>tijd</th>
+        <!--<th>Control Center</th>-->
+      </thead>
+  
+      <tbody id="tbody1">
+        
+      </tbody>
+    </table>
+  
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Logboek</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label class="labs">id: </label>
+          <input type="text" id="NameMod"> <br>
+          <label class="labs">datum: </label>
+          <input type="text" id="NameMod"> <br>
+          <label class="labs">beschrijving: </label>
+          <input type="text" id="NameMod"> <br>
+          <label class="labs">tijd: </label>
+          <input type="text" id="NameMod"> <br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="AddStd()">Add New Record</button>
+          <button type="button" class="btn btn-success" onclick="UpdStd()">Update Record</button>
+          <button type="button" class="btn btn-danger" onclick="DelStd()">Delete Record</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+  
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script> 
+  
+    <script id="MainScript">
+       const firebaseConfig = {
+      apiKey: "AIzaSyBybWBAn6s-InOZyTPu1dTPiRk9i80Pkqs",
+      authDomain: "blog-31c0f.firebaseapp.com",
+      databaseURL: "https://blog-31c0f-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "blog-31c0f",
+      storageBucket: "blog-31c0f.appspot.com",
+      messagingSenderId: "369260072695",
+      appId: "1:369260072695:web:41138979c8a13f39c88df2",
+      measurementId: "G-JRFMEFBJKD"
+    };
+    firebase.initializeApp(firebaseConfig);
+  
+    function SelectAllData(){
+      firebase.database().ref('logboek').once('value', 
+      function(AllRecords){
+        AllRecords.forEach(
+          function(CurrentRecord){
+            var id = CurrentRecord.val().id;
+            var beschrijving = CurrentRecord.val().beschrijving;
+            var datum = CurrentRecord.val().datum;
+            var tijd = CurrentRecord.val().tijd;
+            AddItemsToTable(id, beschrijving, datum, tijd);
+          }
+        );
+      });
+    }
+  
+    window.onload = SelectAllData;
+  
+    var logboekList =[];
+    var logboekn = 0;
+    function AddItemsToTable(id, beschrijving, datum, tijd){
+      var tbody = document.getElementById('tbody1');
+      var trow = document.createElement('tr');
+      var td1 = document.createElement('td');
+      var td2 = document.createElement('td');
+      var td3 = document.createElement('td');
+      var td4 = document.createElement('td');
+      logboekList.push([id,beschrijving,datum,tijd])
+      td1.innerHTML= ++logboekn;
+      td2.innerHTML= beschrijving;
+      td3.innerHTML= datum;
+      td4.innerHTML= tijd;
+      trow.appendChild(td1); 
+      trow.appendChild(td2); 
+      trow.appendChild(td3);
+      trow.appendChild(td4);
+  
+      //var ControlDiv = document.createElement("div");
+      //ControlDiv.innerHTML = '<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)">Add new record</button>'
+      //ControlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+logboekn+')">Edit record</button>'
+  
+      trow.appendChild(ControlDiv);
+      tbody.appendChild(trow);
+    }
+  
+    function FillTboxes(index){
+  
+    }
+  
+    </script>
+  
+  </div>
+
+
+<div class="footer-basic">
+<footer> 
+  <div class="social"><a href="https://www.instagram.com/milan.dc05/"><i class="bi bi-instagram"></i></a>
+    <a href="mailto:decockmilan05@gmail.com"><i class="bi bi-envelope-at"></i></a>
+    <a href="https://twitter.com/Milan48657612"><i class="bi bi-twitter"></i></a></div>
+  <ul class="list-inline">
+    <li class="list-inline-item"><a href="mij.html">Over Mij</a></li>
+    <li class="list-inline-item"><a href="logboek.html">Logboek</a></li>
+    <li class="list-inline-item"><a href="storie.html">User Stories</a></li>
+    <li class="list-inline-item"><a href="lexicon.html">Lexicon</a></li>
+    <li class="list-inline-item"><a href="planning.html">Planning</a></li>
+    <li class="list-inline-item"><a href="stage.html">Stage</a></li>
+    <li class="list-inline-item"><a href="sorter.html">M&M Sorter</a></li>
+</ul>
+  <p class="copyright">Milan De Cock © 2023</p>
+</footer>
+</div>
+
+
+</body>
+</html>
