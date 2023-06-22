@@ -208,6 +208,24 @@ h1{
   align-items: stretch;
 }
 
+.prototype {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.prototype1{
+  max-width: 35rem;
+  border-radius: 8px;
+}
+
+.prototype1{
+  max-width: 25rem;
+  border-radius: 8px;
+}
+
 .mij_kaart .card {
   width: 400px;
 }
